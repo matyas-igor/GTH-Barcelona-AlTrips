@@ -26,7 +26,7 @@ List all the team members. For example:
 * [Igor Matias - matyas-igor](https://github.com/matyas-igor)
 * [Erlinis Quintana - erlinis](https://github.com/erlinis)
 * [Joao Miguel Santos - JoMiguelSantos](https://github.com/JoMiguelSantos)
-* [Kamil Brzozowski - nevrexb](https://github.com/nevrexb)`
+* [Kamil Brzozowski - nevrexb](https://github.com/nevrexb)
 
 
 ## :tada: Why is this so awesome?
