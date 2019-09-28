@@ -1,12 +1,10 @@
 class PlacesController < ApplicationController
    def show
-     # render json: { latitud: params[:lat], longidtu: params[:lng], types: types}.to_json
-
      places = types.each_with_object([]) do |type, collection|
-       collection << client.spots(52.4284881, 12.8873288,
-                                  radius: 2500,
+       collection << client.spots(params[:lat], params[:lng],
+                                  radius: 3000,
                                   types: [type],
-                                  exclude: ['cafe', 'restaurant', 'department_store'])
+                                  exclude: exclude_types)
      end.flatten
 
      render json: places
@@ -26,6 +24,34 @@ class PlacesController < ApplicationController
        'museum',
        'park',
        'tourist_attraction'
+     ]
+   end
+
+   def exclude_types
+     [
+       'bar',
+       'cafe',
+       'restaurant',
+       'department_store',
+       'moving_company',
+       'store',
+       'continent',
+       'country',
+       'finance',
+       'floor',
+       'food',
+       'general_contractor',
+       'geocode',
+       'health',
+       'intersection',
+       'locality',
+       'neighborhood',
+       'place_of_worship',
+       'political',
+       'post_box',
+       'place_of_worship',
+       'political',
+       'general_contractor'
      ]
    end
 end
