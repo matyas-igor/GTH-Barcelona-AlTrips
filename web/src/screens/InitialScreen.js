@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
+import H1 from '../components/H1'
+import H3 from '../components/H3'
 
 const Wrapper = styled.div`
   position: relative;
@@ -14,15 +16,46 @@ const Wrapper = styled.div`
   background-color: #fff;
 `
 
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1200px;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`
+
+const ColLeft = styled.div`
+  width: 40%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+const ColRight = styled.div`
+  width: 60%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`
+
 // background: #8fef89;
 // background: radial-gradient(circle at 30% 107%,#e1eca0 0%,#f2fb68 5%,#89f167 45%,#41ce3f 60%,#149c4a 90%);
 
 const Img = styled.img`
-  width: 200px;
+  width: 350px;
 `
 
 const Logo = styled.img`
-  width: 500px;
+  width: 400px;
   margin-top: -120px;
   margin-bottom: 24px;
 `
@@ -49,35 +82,27 @@ const Icon3 = styled.div`
   font-size: 150px;
 `
 
-const LinksContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-`
 
 const LinkCity = styled(Link)`
   display: block;
-  color: black;
+  color: #000;
   &:hover, &:active {
-    transform: scale(1.5);
-    width: 450px;
-    color: #555;
+    color: ${({ muted }) => muted ? `#eee` : '#666'};
   }
   &:active {
     transform: translateY(4px);
   }
-  width: 300px;
-  font-size: 48px;
   transition: width 0.2s ease-in-out, transform 0.2s ease-in-out;
-  text-align: center;
   ${({ muted }) => muted && `color: #eee;`}
 `
 
-const Text = styled.div`
-  font-size: 22px;
-  color: ${({ white }) => white ? '#fff' : '#999'};
-  text-align: center;
-  margin-top: 32px;
-  margin-bottom: 32px;
+const Ul = styled.ul`
+  font-size: 32px;
+  margin: 0;
+  line-height: 1.5;
+  a {
+    font-weight: bold;
+  }
 `
 
 const interval = 1000;
@@ -92,16 +117,32 @@ const InitialScreen = () => {
   }, [])
   return (
     <Wrapper>
-      <Logo src={'/assets/altripslogo.svg'} alt={''} />
-      <Img src={'/assets/bike.gif'} alt={''} />
-      <Text>Select a city to start your bike trip!</Text>
-      <Icon1>🍃</Icon1>
-      <Icon2>🍃</Icon2>
-      <Icon3>🍃</Icon3>
-      <LinksContainer>
-        <LinkCity to={'/explore/berlin'}>Berlin</LinkCity>
-        <LinkCity to={'/explore/barcelona'}>Barcelona</LinkCity>
-      </LinksContainer>
+      <Content>
+        <Logo src={'/assets/altripslogo.svg'} alt={''} />
+        <Row>
+          <ColLeft><Img src={'/assets/bike.gif'} alt={''} /></ColLeft>
+          <ColRight>
+            <H1>Bicycle trip planner for  🌐 <span style={{ color: '#0074D9' }}>sustainable</span><br />and 🌱 <span style={{ color: '#2ECC40' }}>eco-friendly</span> future</H1>
+            <H3>Start by selecting a city:</H3>
+            <Ul>
+              <li>
+                <LinkCity to={'/explore/berlin'}>Berlin</LinkCity>
+              </li>
+              <li>
+                <LinkCity to={'/explore/barcelona'}>Barcelona</LinkCity>
+              </li>
+              <li>
+                <span style={{ color: '#999' }}>
+                  More coming soon...
+                </span>
+              </li>
+            </Ul>
+          </ColRight>
+        </Row>
+      </Content>
+      {/*<Icon1>🍃</Icon1>*/}
+      {/*<Icon2>🍃</Icon2>*/}
+      {/*<Icon3>🍃</Icon3>*/}
     </Wrapper>
   );
 }

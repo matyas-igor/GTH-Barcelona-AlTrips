@@ -17,12 +17,48 @@ const styles = [
   { featureType: 'road.highway', elementType: 'geometry.fill', stylers: [{ color: '#f8f29d' }] }
 ]
 
+const MapControl = ({
+  map,
+  position,
+  children,
+  ...props
+}) => {
+  const [div, setDiv] = useState(null)
+
+  useEffect(() => {
+    const divCurrent = document.createElement('div')
+    const indexCurrent = map.controls[position].length
+    map.controls[position].push(divCurrent)
+
+    setDiv(divCurrent)
+
+    return () => {
+      if (map.controls[position]) {
+        map.controls[position].removeAt(indexCurrent)
+      }
+      if (divCurrent) {
+        divCurrent.remove()
+      }
+    }
+  }, [])
+
+  return div ? ReactDOM.createPortal(children, div) : null
+}
+
+const ControlsWrapper = styled.div`
+  padding: 12px;
+`
+
 const MapComponent = withScriptjs(withGoogleMap(({
   defaultZoom = 8,
   defaultCenter = { lat: -52.518927, lng: 13.404935 },
   onClose = () => {},
   onMapChange = () => {},
   defaultOptions = {},
+  renderTopControl,
+  renderBottomControl,
+  renderLeftTopControl,
+  renderRightBottomControl,
   children,
   ...props
 }) => {
@@ -60,6 +96,26 @@ const MapComponent = withScriptjs(withGoogleMap(({
       controlSize={20}
       {...props}
     >
+      {map && renderTopControl && (
+        <MapControl map={map} position={window.google.maps.ControlPosition.TOP_CENTER}>
+          <ControlsWrapper>{renderTopControl(map)}</ControlsWrapper>
+        </MapControl>
+      )}
+      {map && renderBottomControl && (
+        <MapControl map={map} position={window.google.maps.ControlPosition.BOTTOM_CENTER}>
+          <ControlsWrapper>{renderBottomControl(map)}</ControlsWrapper>
+        </MapControl>
+      )}
+      {map && renderLeftTopControl && (
+        <MapControl map={map} position={window.google.maps.ControlPosition.LEFT_TOP}>
+          <ControlsWrapper>{renderLeftTopControl(map)}</ControlsWrapper>
+        </MapControl>
+      )}
+      {map && renderRightBottomControl && (
+        <MapControl map={map} position={window.google.maps.ControlPosition.RIGHT_BOTTOM}>
+          <ControlsWrapper>{renderRightBottomControl(map)}</ControlsWrapper>
+        </MapControl>
+      )}
       {map && React.Children.toArray(children).map(element => React.cloneElement(element, { map }))}
       <StreetViewPanorama defaultVisible={false} />
     </GoogleMap>
