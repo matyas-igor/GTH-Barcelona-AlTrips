@@ -191,16 +191,25 @@ const MapScreen = ({
     setCity(capitalize(name))
   }, [location.pathname])
 
-  useDidUpdateEffect(async () => {
+  const reload = async () => {
     if (city && difficulty) {
       setLoading(true);
-      const route = await axios.get(`${API_URL}/getRoute?city=${city}&difficulty=${difficulty}`);
+      let route = null;
+
+      try {
+       route = await axios.get(`${API_URL}/getRoute?city=${city}&difficulty=${difficulty}`);
+      } catch (e) {
+        console.error(e.stack);
+      }
+
       setRoute(route);
       setLoading(false);
 
       console.log('ROUTE', route);
     }
-  }, [city, difficulty])
+  }
+
+  useDidUpdateEffect(reload, [city, difficulty])
 
   const [map, setMap] = useState(null);
 
@@ -230,7 +239,7 @@ const MapScreen = ({
             />
           </CardInner>
           <ButtonWrapper>
-            <Button width={tripWidth} size={'large'} loading={loading} disabled={loading}>
+            <Button width={tripWidth} size={'large'} loading={loading} disabled={loading} onClick={reload}>
               Get a new trip 🚴
             </Button>
           </ButtonWrapper>
