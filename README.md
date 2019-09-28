@@ -20,13 +20,9 @@ Components not created at the hackathon:
 
 
 Write a short abstract of the project. Don't forget to include:
-* Hackathon topic you used (Sustainability, Accessibility or Community);
-* The development tools used to build the project;
-* SDKs used in the project;
-* APIs used in the project;
-* Any assets used in the project;
-* Any libraries used in the project;
-* Any components not created at the hackathon;
+* Hackathon topic you used: Sustainability
+* The development tools: React, Python, Ruby
+* APIs used: Google
 
 ## :hugs: Maintainers
 
