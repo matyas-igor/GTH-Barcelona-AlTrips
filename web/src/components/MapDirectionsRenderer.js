@@ -15,7 +15,7 @@ const MapDirectionsRenderer = ({
 
   useEffect(() => {
     const waypoints = points.map(p => ({
-      location: p,
+      location: Array.isArray(p.position) ? { lat: p.position[0], lng: p.position[1] } : p.position,
       stopover: true
     }));
     const origin = waypoints.shift().location;

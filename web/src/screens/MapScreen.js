@@ -35,6 +35,96 @@ const points = [
 const center = { lat: 41.394943, lng: 2.153814 };
 const zoom = 10;
 
+const routes = [
+  {
+    name: 'Mountain ride in Viladecans',
+    length: 20,
+    difficulty: 'Normal',
+    savings: 3.5,
+    image: 'https://lh5.googleusercontent.com/p/AF1QipOHQUuGDY2l8Un2laqeGTUGHUbmDTmLQXFM_fi2=s773-k-no',
+    points: [
+      {
+        name: 'Plaça De Les Palmeres',
+        description: 'Park',
+        image: 'https://geo0.ggpht.com/maps/photothumb/fd/v1?bpb=CiwKKnNlYXJjaC5nd3MtcHJvZC9tYXBzL2xvY2FsLWRldGFpbHMtZ2V0Y2FyZBIgChIJv-hitu-cpBIRg40N3qkWUx4qCg0AAAAAFQAAAAAaBgjwARCYAw&gl=ES',
+        position: [41.315568, 2.016317],
+      },
+      {
+        name: 'Tanatorio Viladecans',
+        description: 'Funeral home',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipND_bEY-jTEfT8viU-sNGNJQNk5NLcOi3_oQ_hf=w426-h240-k-no',
+        position: [41.323440, 2.028729],
+      },
+      {
+        name: 'Can Massallera',
+        description: 'Civic center',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipPiyYuQiFMIB2KyWDqclMRd9q4fwZbNUdJV2HNN=w408-h612-k-no',
+        position: [41.341725, 2.042668],
+      },
+      {
+        name: 'Escola Pública Vicente Ferrer',
+        description: 'School',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipOuC8tVdf4XLH4tchz3pBzosBrgnycb03d-t2uK=w408-h272-k-no',
+        position: [41.345564, 2.027114],
+      },
+      {
+        name: 'Esglesia',
+        description: 'Catholic church',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNYVupipx9Z-UigxpIzpnS0ouqQY5Thw8BGhSxq=w408-h306-k-no',
+        position: [41.336065, 1.995673],
+      },
+    ]
+  },
+  {
+    name: 'Trip around Sabadell',
+    length: 30,
+    difficulty: 'Moderate',
+    savings: 5.2,
+    image: 'https://lh5.googleusercontent.com/p/AF1QipNiNPuTUf2Un_PTN94Yc3EZj0Ct6cLUB4u4t_ms=w408-h306-k-no',
+    points: [
+      {
+        name: 'Passeig de la Plaça Major',
+        description: 'Historical landmark',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipPxbrtdszDc1PCYQa6Wz6mBlkZPbrW_FhJb1A_G=w408-h408-k-no',
+        position: [41.547741, 2.108916],
+      },
+      {
+
+        name: 'Estadi Josep Molins',
+        description: 'Stadium',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNMFcsyD5M-ymkhM4NYRaQuMe5rBsfmBkYNIQ1g=w426-h240-k-no',
+        position: [41.538813, 2.124857],
+      },
+      {
+
+        name: 'Font de Can Llobateres',
+        description: 'Historical landmark',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipPw0ciZwD9c_6l3snVEMocJ02SGhzx2tYI3MaiE=w408-h306-k-no',
+        position: [41.529262, 2.137333],
+      },
+      {
+        name: 'Ajuntament de Santa Perpètua de Mogoda',
+        description: 'City or town hall',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipPmIgcVkVOKNZg5MKzV76ya71IyI73MjpTYW9F9=w426-h240-k-no',
+        position: [41.534584, 2.183382],
+      },
+      {
+
+        name: 'L\'Hostal del Fum',
+        description: 'Park',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipMxo7Fxf1jmG67TuXtnws7qvBRWlhnjANhEmpjR=w426-h240-k-no',
+        position: [41.564537, 2.175962],
+      },
+      {
+        name: 'Cementiri de Palau-solità',
+        description: 'Cemetery',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNEc5Msx1CN-obb_h6qm-VEzqTsmEFES65-P1QK=w408-h272-k-no',
+        position: [41.587326, 2.159963],
+      },
+    ]
+  },
+]
+
 const LinkBack = styled(Link)`
   margin-right: 8px;
   color: #666;
@@ -65,10 +155,10 @@ export const Image = styled.div`
 
 const getPointTooltipContent = (point) => {
   return (<>
-    <Image style={{ height: pointHeight, width: pointWidth }} url={`https://picsum.photos/${pointWidth * 2}/${pointHeight * 2}`} />
+    <Image style={{ height: pointHeight, width: pointWidth }} url={point.image} />
     <div style={{ padding: '4px 16px' }}>
-      <Base style={{ fontWeight: 'bold' }}>Name</Base>
-      <Small>Description</Small>
+      <Base style={{ fontWeight: 'bold' }}>{point.name}</Base>
+      <Small>{point.description}</Small>
     </div>
   </>)
 }
@@ -94,7 +184,7 @@ const Sub = styled.span`
 
 const pause = timeout => new Promise(resolve => setTimeout(resolve, timeout));
 
-const TripContent = ({ trip }) => {
+const TripContent = ({ route }) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -115,14 +205,14 @@ const TripContent = ({ trip }) => {
 
   return (<>
     <Card style={{ width: tripWidth, padding: 0, marginBottom: 16 }} withOverflowHidden>
-      <Image style={{ height: tripHeight, width: tripWidth }} url={`https://picsum.photos/${tripWidth * 2}/${tripHeight * 2}`} />
+      <Image style={{ height: tripHeight, width: tripWidth }} url={route.image} />
       <TripDescription>
-        <Base style={{ fontWeight: 'bold' }}>Name</Base>
-        <Small>Level: <strong>Easy</strong></Small>
-        <Small>Length: <strong>76km</strong></Small>
+        <Base style={{ fontWeight: 'bold' }}>{route.name}</Base>
+        <Small>Difficulty: <strong>{route.difficulty}</strong></Small>
+        <Small>Length: <strong>{route.length} km</strong></Small>
         <TagContainer>
           <Tag style={{ width: '100%' }}>
-            <span>You will save 35kg in CO<Sub>2</Sub> 🌿</span>
+            <span>You will save {route.savings} kg in CO<Sub>2</Sub> 🌿</span>
           </Tag>
         </TagContainer>
       </TripDescription>
@@ -179,14 +269,17 @@ const MapScreen = ({
   location = {},
   ...props
 }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [routeIndex, setRouteIndex] = useState(0);
 
-  const [route, setRoute] = useState(null);
+  const [route, setRoute] = useState(routes[0]);
 
-  const [city, setCity] = useState(null);
+  const [, name] = (location.pathname || '').match(/\/([^/]+)$/) || []
+  const [city, setCity] = useState(capitalize(name));
+
   const [difficulty, setDifficulty] = useState(3);
 
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     const [, name] = (location.pathname || '').match(/\/([^/]+)$/) || []
     setCity(capitalize(name))
   }, [location.pathname])
@@ -198,14 +291,20 @@ const MapScreen = ({
 
       try {
        route = await axios.get(`${API_URL}/getRoute?city=${city}&difficulty=${difficulty}`);
+        console.log('ROUTE', route);
       } catch (e) {
         console.error(e.stack);
+        await pause(Math.random() * 1000 + 1000);
+        let routeIndexNew = routeIndex + 1 > routes.length - 1 ? 0 : routeIndex + 1;
+        setRouteIndex(routeIndexNew);
+        route = routes[routeIndexNew];
       }
 
-      setRoute(route);
-      setLoading(false);
+      if (route) {
+        setRoute(route);
+      }
 
-      console.log('ROUTE', route);
+      setLoading(false);
     }
   }
 
@@ -244,14 +343,14 @@ const MapScreen = ({
             </Button>
           </ButtonWrapper>
         </Card>
-        <TripContent trip={{}} />
+        <TripContent route={route} />
       </>)}
     >
-      <MapDirectionsRenderer points={points} options={{ suppressMarkers: true }} />
-      {map && points.map((point, idx) => (
+      <MapDirectionsRenderer points={route.points} options={{ suppressMarkers: true }} />
+      {map && route.points.map((point, idx) => (
         <MapMarker
           key={`marker-${idx}`}
-          position={point}
+          position={Array.isArray(point.position) ? { lat: point.position[0], lng: point.position[1] } : point.position}
           label={(idx + 1).toString()}
           tooltip
           tooltipProps={{
