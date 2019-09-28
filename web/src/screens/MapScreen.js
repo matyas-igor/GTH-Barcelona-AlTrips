@@ -16,9 +16,9 @@ import Small from '../components/Small'
 
 import Slider from "@kiwicom/orbit-components/lib/Slider";
 import Button from "@kiwicom/orbit-components/lib/Button";
+import Stack from "@kiwicom/orbit-components/lib/Stack";
 import Tag from "@kiwicom/orbit-components/lib/Tag";
 import InputField from "@kiwicom/orbit-components/lib/InputField";
-import Stack from "@kiwicom/orbit-components/lib/Stack";
 import Alert from "@kiwicom/orbit-components/lib/Alert";
 import Modal, { ModalSection, ModalFooter } from "@kiwicom/orbit-components/lib/Modal";
 import { useDidUpdateEffect } from '../hooks'
@@ -55,7 +55,7 @@ const capitalize = (s) => {
 const pointHeight = 150;
 const pointWidth = 300;
 
-const Image = styled.div`
+export const Image = styled.div`
   background: url(${({ url }) => url}) no-repeat center center;
   background-size: cover;
   height: 100%;
