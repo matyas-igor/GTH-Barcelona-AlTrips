@@ -6,7 +6,7 @@ import { Popper } from 'react-popper'
 import { useClick, useDebounce, useDidUpdateEffect, useHover, useOutsideClick } from '../hooks'
 import { Transition, config } from 'react-spring/renderprops'
 
-const shadow = '0 2px 17px 0 rgba(63, 65, 68, 0.3)'
+export const shadow = '0 2px 17px 0 rgba(63, 65, 68, 0.3)'
 
 const getPx = (prop) => {
   if (typeof prop === 'string') {
