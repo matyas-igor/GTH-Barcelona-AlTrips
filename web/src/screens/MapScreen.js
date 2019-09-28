@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import MapDirectionsRenderer from '../components/MapDirectionsRenderer'
 import Map from '../components/Map'
@@ -16,15 +16,20 @@ const center = { lat: 41.394943, lng: 2.153814 };
 const zoom = 12;
 
 const MapScreen = () => {
+  const [map, setMap] = useState(null);
   return (
-    <Map apiKey={API_KEY} center={center} zoom={zoom}>
+    <Map apiKey={API_KEY} center={center} zoom={zoom} onMapChange={setMap}>
       <MapDirectionsRenderer points={points} options={{ suppressMarkers: true }} />
-      {points.map((point, idx) => (
+      {map && points.map((point, idx) => (
         <MapMarker
           key={`marker-${idx}`}
           position={point}
           tooltip
-          tooltipProps={{ content: <span>15 mins stop</span>, offset: 0 }}
+          tooltipProps={{
+            content: <span>15 mins stop</span>,
+            offset: 0,
+            parentElement: map.getDiv().firstChild,
+          }}
         />
       ))}
     </Map>

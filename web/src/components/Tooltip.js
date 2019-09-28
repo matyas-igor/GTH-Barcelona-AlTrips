@@ -91,6 +91,7 @@ export const TooltipContent = ({
   height,
   show = true,
   parentQuerySelector,
+  parentElement,
   parentRef,
   childRef
 }) => {
@@ -126,7 +127,7 @@ export const TooltipContent = ({
         </div>
       )}
     </Popper>,
-    parentQuerySelector ? document.querySelector(parentQuerySelector) : document.body
+    parentElement ? parentElement : (parentQuerySelector ? document.querySelector(parentQuerySelector) : document.body)
   )
 }
 
@@ -185,6 +186,7 @@ const Tooltip = ({
   withOverflowHidden = false,
   animate = true,
   parentQuerySelector,
+  parentElement,
   offset = 8,
   multiline = false,
   trigger = 'hover',
@@ -225,6 +227,7 @@ const Tooltip = ({
           trigger={trigger}
           content={content}
           parentQuerySelector={parentQuerySelector}
+          parentElement={parentElement}
           show={opened}
         />
       )}
