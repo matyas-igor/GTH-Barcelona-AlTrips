@@ -39,7 +39,7 @@ const routes = [
   {
     name: 'Mountain ride in Viladecans',
     length: 20,
-    difficulty: 'Normal',
+    difficulty: 'Easy',
     savings: 3.5,
     image: 'https://lh5.googleusercontent.com/p/AF1QipOHQUuGDY2l8Un2laqeGTUGHUbmDTmLQXFM_fi2=s773-k-no',
     points: [
@@ -123,7 +123,72 @@ const routes = [
       },
     ]
   },
+  {
+    name: 'Mataró beach ride',
+    length: 35,
+    difficulty: 'Severe',
+    savings: 6.3,
+    image: 'https://lh5.googleusercontent.com/p/AF1QipPuYWw1VfACwXLf21Z06cSDnerRLuHx_JuiFP98=w408-h306-k-no',
+    points: [
+      {
+        name: 'Tecnocampus',
+        description: 'College',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipM6iA-K32HjVCcKXJpWcz9oAyI_VZCUBHUAYwdX=w408-h306-k-no',
+        position: [41.527783, 2.433913],
+      },
+      {
+        name: 'Ajuntament de Mataró',
+        description: 'City or town hall',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNEnPaX1ZShKVIdFw0QTNhvYQ54vRO0OVUknrGv=w408-h544-k-no',
+        position: [41.539758, 2.444871],
+      },
+      {
+
+        name: 'Circuit municipal de BMX',
+        description: 'BMX track',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNO7TosVArAshM3xX1Coc8ZaO5F1I5j_XFnl9ns=w408-h272-k-no',
+        position: [41.543529, 2.460334],
+      },
+      {
+        name: 'Beach bar camping barcelona',
+        description: 'Cafe',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipP2cUDux7tZHKgyTuhbYtDVLTCtbOERXSkDC2UX=w408-h253-k-no',
+        position: [41.551158, 2.483929],
+      },
+      {
+        name: 'Parc Joaquim Passi',
+        description: 'Park',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNQHhIjHPykBqKz66nzlny8Mpvmn7FE3_SnQTjw=w426-h240-k-no',
+        position: [41.559527, 2.495641],
+      },
+      {
+        name: 'Club de Golf Llavaneras-Barcelona',
+        description: 'Golf course',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNJw3lmeCrdHoSLzFhVXCYANHxVn3wIh9oQl0YZ=w598-h240-k-no',
+        position: [41.564370, 2.485054],
+      },
+      {
+        name: 'Sant Miquel de Mata',
+        description: 'Chapel',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipNAAR7c6u-1tzTD0Gos_r9v3rroucj3Gu2UHHZ-=w408-h306-k-no',
+        position: [41.568877, 2.463521],
+      },
+      {
+        name: 'Can Joaquim Serra',
+        description: 'Historical landmark',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipPxrF6PnBqkqT-2oMAQrGB5jl4aYyteGtgxI-47=w408-h306-k-no',
+        position: [41.563979, 2.447529],
+      },
+      {
+        name: 'Turó de Cerdanyola',
+        description: 'Park',
+        image: 'https://lh5.googleusercontent.com/p/AF1QipO2PlPDF80zKBtKKzF1xINqHXeTd8mEfR1zTLS9=w426-h240-k-no',
+        position: [41.548239, 2.423953],
+      },
+    ]
+  },
 ]
+
 
 const LinkBack = styled(Link)`
   margin-right: 8px;
@@ -294,7 +359,7 @@ const MapScreen = ({
         console.log('ROUTE', route);
       } catch (e) {
         console.error(e.stack);
-        await pause(Math.random() * 1000 + 1000);
+        await pause(Math.random() * 500 + 500);
         let routeIndexNew = routeIndex + 1 > routes.length - 1 ? 0 : routeIndex + 1;
         setRouteIndex(routeIndexNew);
         route = routes[routeIndexNew];
