@@ -1,68 +1,17 @@
 import React, { useRef } from 'react'
-import ReactDomServer from 'react-dom/server.browser'
 import { Marker } from 'react-google-maps'
 
-import { SENSATION_WHITE } from '../colors'
-import { FONT_FAMILY_BASE } from '../constants'
-import { useMediaBreakpoints } from '../helpers'
-import { Base as BaseFontSize } from '../Typography/size'
-import { hasTouchScreen } from '../accessibility'
-import { TooltipContent, useTooltip } from '../Tooltip/Tooltip'
+import { TooltipContent, useTooltip } from './Tooltip'
 import { useDidUpdateEffect } from '../hooks'
 
-const svgProps = {
-  version: '1.1',
-  xmlns: 'http://www.w3.org/2000/svg',
-  xmlnsXlink: 'http://www.w3.org/1999/xlink'
-}
-
-const renderIcon = element => `data:image/svg+xml;base64,${window.btoa(ReactDomServer.renderToStaticMarkup(element))}`
-
-const getCustomIcon = (element, outerSize = new window.google.maps.Size(40, 40), innerSize = new window.google.maps.Size(16, 16)) => {
+const getIcon = () => {
   return {
-    url: renderIcon(React.cloneElement(element, { width: innerSize.width, height: innerSize.height, ...svgProps })),
-    size: outerSize,
-    origin: new window.google.maps.Point((innerSize.width - outerSize.width) / 2, (innerSize.height - outerSize.height) / 2),
-    anchor: new window.google.maps.Point(outerSize.width / 2, outerSize.height / 2),
-    labelOrigin: new window.google.maps.Point(outerSize.width / 2, outerSize.height / 2)
-  }
-}
-
-const getIcon = (type = 'marker') => {
-  switch (type) {
-    case 'marker':
-      return {
-        url: renderIcon(<MapMarkerIcon width={38} height={50} {...svgProps} />),
-        size: new window.google.maps.Size(38, 50),
-        origin: new window.google.maps.Point(0, 0),
-        anchor: new window.google.maps.Point(19, 46),
-        scaledSize: new window.google.maps.Size(38, 50),
-        labelOrigin: new window.google.maps.Point(19, 19)
-      }
-    case 'dot':
-      return {
-        url: renderIcon(<DotMarkerIcon width={16} height={16} {...svgProps} />),
-        size: new window.google.maps.Size(16, 16),
-        origin: new window.google.maps.Point(0, 0),
-        anchor: new window.google.maps.Point(4, 4),
-        scaledSize: new window.google.maps.Size(8, 8)
-      }
-    case 'circle-green':
-      return {
-        url: renderIcon(<PointOfInterestIcon width={32} height={32} {...svgProps} />),
-        size: new window.google.maps.Size(32, 32),
-        origin: new window.google.maps.Point(0, 0),
-        anchor: new window.google.maps.Point(12, 12),
-        scaledSize: new window.google.maps.Size(24, 24)
-      }
-    case 'circle-black':
-      return {
-        url: renderIcon(<TransportationCircleIcon width={40} height={40} {...svgProps} />),
-        size: new window.google.maps.Size(40, 40),
-        origin: new window.google.maps.Point(0, 0),
-        anchor: new window.google.maps.Point(20, 20),
-        scaledSize: new window.google.maps.Size(40, 40)
-      }
+    url: '/assets/point.svg',
+    size: new window.google.maps.Size(42, 42),
+    origin: new window.google.maps.Point(0, 0),
+    anchor: new window.google.maps.Point(21, 21),
+    scaledSize: new window.google.maps.Size(42, 42),
+    labelOrigin: new window.google.maps.Point(21, 21)
   }
 }
 
@@ -131,8 +80,9 @@ const MapMarker = ({
     ...restTooltipProps
   } = tooltipProps
 
+  // eslint-disable-next-line
   const { opened, openedDebounced, close, parentRef, childRef, onMouseOver, onMouseOut, onClick } = useTooltip({
-    trigger: hasTouchScreen() ? 'click' : trigger,
+    trigger: trigger,
     onOpen,
     onClose,
     onToggle,
@@ -141,8 +91,10 @@ const MapMarker = ({
 
   const getParentNode = target => target.nodeName === 'IMG' ? target.parentNode : target
 
+  // eslint-disable-next-line
   const listeners = useRef({}).current
 
+  // eslint-disable-next-line
   useDidUpdateEffect(() => {
     if (opened) {
       listeners.bounds = map.addListener('bounds_changed', close)
@@ -162,7 +114,7 @@ const MapMarker = ({
       <TooltipContent
         parentRef={parentRef}
         childRef={childRef}
-        trigger={hasTouchScreen() ? 'click' : trigger}
+        trigger={trigger}
         show={opened}
         animate={animate}
         offset={offset}
@@ -182,18 +134,6 @@ const MapMarker = ({
       {...props}
     />
   </>)
-}
-
-MapMarker.propTypes = {
-  type: PropTypes.oneOf(['marker', 'dot', 'circle-green', 'circle-black']),
-  position: PropTypes.shape({
-    lat: PropTypes.number,
-    lng: PropTypes.number
-  }).isRequired,
-  label: PropTypes.string,
-  icon: PropTypes.element,
-  tooltip: PropTypes.bool,
-  tooltipProps: PropTypes.object
 }
 
 export default MapMarker

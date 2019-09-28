@@ -2,6 +2,7 @@ import React from 'react'
 
 import MapDirectionsRenderer from '../components/MapDirectionsRenderer'
 import Map from '../components/Map'
+import MapMarker from '../components/MapMarker'
 
 const API_KEY = 'AIzaSyC2N9tDmBIlN1025PL6vW5XqCgwMyO8B7M'
 
@@ -18,6 +19,14 @@ const MapScreen = () => {
   return (
     <Map apiKey={API_KEY} center={center} zoom={zoom}>
       <MapDirectionsRenderer points={points} options={{ suppressMarkers: true }} />
+      {points.map((point, idx) => (
+        <MapMarker
+          key={`marker-${idx}`}
+          position={point}
+          tooltip
+          tooltipProps={{ content: <span>15 mins stop</span>, offset: 0 }}
+        />
+      ))}
     </Map>
   )
 }

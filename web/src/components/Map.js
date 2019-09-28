@@ -7,6 +7,7 @@ import {
   StreetViewPanorama
 } from 'react-google-maps'
 import styled from 'styled-components'
+import { useDidUpdateEffect } from '../hooks'
 
 const MAP_BACKGROUND_COLOR = '#e5e3df';
 
@@ -27,7 +28,7 @@ const MapComponent = withScriptjs(withGoogleMap(({
 }) => {
   const [map, setMap] = useState(null)
 
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     onMapChange(map)
   }, [map]);
 
@@ -42,8 +43,17 @@ const MapComponent = withScriptjs(withGoogleMap(({
       defaultZoom={9}
       defaultCenter={{ lat: -34.397, lng: 150.644 }}
       defaultOptions={{
-        disableDefaultUI: true,
+        disableDefaultUI: false,
         keyboardShortcuts: false,
+        mapTypeControl: false,
+        fullscreenControl: false,
+        streetViewControl: false,
+        scaleControl: true,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: window.google.maps.ControlPosition.RIGHT_TOP,
+        },
+        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
         styles,
         ...defaultOptions
       }}

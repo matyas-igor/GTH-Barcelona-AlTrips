@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { DirectionsRenderer } from 'react-google-maps'
 
+const polylineOptions = {
+  strokeColor: '#000',
+  strokeOpacity: 1,
+  strokeWeight: 2.5,
+}
+
 const MapDirectionsRenderer = ({
   points,
   ...props
@@ -15,7 +21,7 @@ const MapDirectionsRenderer = ({
     const origin = waypoints.shift().location;
     const destination = waypoints.pop().location;
 
-    const directionsService = new window.google.maps.DirectionsService({ suppressMarkers: true });
+    const directionsService = new window.google.maps.DirectionsService({ suppressMarkers: true, polylineOptions });
     directionsService.route(
       {
         origin: origin,
@@ -35,7 +41,7 @@ const MapDirectionsRenderer = ({
   }, [points]);
 
   // https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsRendererOptions.infoWindow
-  return directions && (<DirectionsRenderer directions={directions} options={{ suppressMarkers: true }} {...props} />);
+  return directions && (<DirectionsRenderer directions={directions} {...props} />);
 }
 
 export default MapDirectionsRenderer;
