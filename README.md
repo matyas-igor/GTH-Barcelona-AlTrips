@@ -1,6 +1,8 @@
 # GTH-Barcelona-AlternativeTrips
 Project submission for the `Global Travel Hackathon in Barcelona, by AlternativeTrips team`.
 
+https://barcelona-al-trips.herokuapp.com/
+
 **Bycicle trip panner for sustainable and eco-friendly future**
 
 <img width="1440" alt="Screen Shot 2019-09-28 at 14 09 02" src="https://user-images.githubusercontent.com/3536796/65816588-d7805c80-e1fd-11e9-9c81-34a89dd943ad.png">
