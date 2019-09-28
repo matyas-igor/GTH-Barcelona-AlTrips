@@ -4,7 +4,7 @@ import MapDirectionsRenderer from '../components/MapDirectionsRenderer'
 import Map from '../components/Map'
 import MapMarker from '../components/MapMarker'
 
-const API_KEY = 'AIzaSyC2N9tDmBIlN1025PL6vW5XqCgwMyO8B7M'
+const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
 const points = [
   { name: 'Vallcarca i els Penitents', lat: 41.412475, lng: 2.140027 },
