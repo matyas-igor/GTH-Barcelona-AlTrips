@@ -1,9 +1,9 @@
 # GTH-Barcelona-AlTrips
 Project submission for the `Global Travel Hackathon in Barcelona, by AlTrips team`.
 
-**Write one sentence explaining what does your project.**
+**Bycicle trip panner for sustainable and eco-friendly future**
 
-![Add a screenshot from your project. For example the main website page.](https://raw.githubusercontent.com/Global-Travel-Hackathon/GTH-Location-TeamName/master/screenshots/Global-Travel-Hackathon-image.png)
+
 
 ## :books: Description
 
@@ -20,22 +20,32 @@ Write a short abstract of the project. Don't forget to include:
 ## :hugs: Maintainers
 
 List all the team members. For example:
-* [Jona Azizaj - jonatoni](https://github.com/jonatoni)
+* [Igor Matias - matyas-igor](https://github.com/matyas-igor)
+* [Erlinis Quintana - erlinis](https://github.com/erlinis)
+* [Joao Miguel Santos - JoMiguelSantos](https://github.com/JoMiguelSantos)
+* [Kamil Brzozowski - nevrexb](https://github.com/nevrexb)`
 
 
 ## :tada: Why is this so awesome?
 
-* List reasons why you think your project is awesome.
-* Two.
-* Etc.
+* We got real data analytics in place
+* We solve real problem
+* We got GIFs in presentation
+* We are awesome
 
 ## :hammer_and_wrench: Installation
 
-Write a short description how can other people run your project.
+- Web:
+```
+cd web
+yarn install
+REACT_APP_GOOGLE_API_KEY=... REACT_APP_API_URL=... yarn start
+```
 
 ## :bulb: Devstack
 
-Please, explain what technologies you have used.
+- Back-end: Ruby to connect to Google Places API and Python to calculate distance and select points based in DiGoogle rections matrix API
+- Front-end: React with Hooks API, styled-components, Orbit by Kiwi + Google Map
 
 ## :warning: Licence
 
