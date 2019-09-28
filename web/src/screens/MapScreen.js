@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
+import axios from 'axios'
 
 import MapDirectionsRenderer from '../components/MapDirectionsRenderer'
 import Map from '../components/Map'
 import MapMarker from '../components/MapMarker'
 import Card, { CardInner } from '../components/Card'
 import H2 from '../components/H2'
+import H3 from '../components/H3'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import ChevronLeft from "@kiwicom/orbit-components/lib/icons/ChevronLeft";
@@ -14,8 +17,14 @@ import Small from '../components/Small'
 import Slider from "@kiwicom/orbit-components/lib/Slider";
 import Button from "@kiwicom/orbit-components/lib/Button";
 import Tag from "@kiwicom/orbit-components/lib/Tag";
+import InputField from "@kiwicom/orbit-components/lib/InputField";
+import Stack from "@kiwicom/orbit-components/lib/Stack";
+import Alert from "@kiwicom/orbit-components/lib/Alert";
+import Modal, { ModalSection, ModalFooter } from "@kiwicom/orbit-components/lib/Modal";
+import { useDidUpdateEffect } from '../hooks'
 
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const points = [
   { name: 'Vallcarca i els Penitents', lat: 41.412475, lng: 2.140027 },
@@ -24,7 +33,7 @@ const points = [
 ];
 
 const center = { lat: 41.394943, lng: 2.153814 };
-const zoom = 12;
+const zoom = 10;
 
 const LinkBack = styled(Link)`
   margin-right: 8px;
@@ -83,8 +92,28 @@ const Sub = styled.span`
   top: 2px;
 `
 
-const getTripContent = trip => {
-  return (
+const pause = timeout => new Promise(resolve => setTimeout(resolve, timeout));
+
+const TripContent = ({ trip }) => {
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const inputRef = useRef(null)
+
+  useDidUpdateEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [inputRef.current])
+
+  const load = async () => {
+    setLoading(true)
+    await pause(Math.random() * 3000 + 1000);
+    setLoading(false)
+    setSuccess(true)
+  }
+
+  return (<>
     <Card style={{ width: tripWidth, padding: 0, marginBottom: 16 }} withOverflowHidden>
       <Image style={{ height: tripHeight, width: tripWidth }} url={`https://picsum.photos/${tripWidth * 2}/${tripHeight * 2}`} />
       <TripDescription>
@@ -97,8 +126,30 @@ const getTripContent = trip => {
           </Tag>
         </TagContainer>
       </TripDescription>
+      <ButtonWrapper>
+        <Button type={'secondary'} width={tripWidth} size={'large'} onClick={() => setOpen(true)}>
+          Save a trip 🔗
+        </Button>
+      </ButtonWrapper>
     </Card>
-  )
+    {open && (
+      <Modal onClose={() => setOpen(false)}>
+        <H2 style={{ marginTop: 54, textAlign: 'center' }}>Enter your email to get a trip. Have a nice ride! 💪</H2>
+        <ModalFooter>
+          {success ? (
+            <Alert type="success" title={null} icon>
+              Link with the trip has been successfully sent to your email 😎
+            </Alert>
+          ) : (
+            <Stack direction={'row'}>
+              <InputField type='email' ref={inputRef} desktop={{ inline: true }} placeholder={'your-name@mail.com'} />
+              <Button onClick={load} loading={loading} disabled={loading}>Send a link</Button>
+            </Stack>
+          )}
+        </ModalFooter>
+      </Modal>
+    )}
+  </>)
 }
 
 const getDifficultyLabel = number => {
@@ -112,24 +163,51 @@ const getDifficultyLabel = number => {
   }
 }
 
+const ButtonWrapper = styled.div`
+  button {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+`
+
+const centers = {
+  Berlin: { lat: 52.519417, lng: 13.405141 },
+  Barcelona: { lat: 41.397983, lng: 2.173422 },
+}
+
 const MapScreen = ({
   location = {},
   ...props
 }) => {
-  const [city, setCity] = useState(null)
-  const [difficulty, setDifficulty] = useState(3)
+  const [loading, setLoading] = useState(true);
+
+  const [route, setRoute] = useState(null);
+
+  const [city, setCity] = useState(null);
+  const [difficulty, setDifficulty] = useState(3);
 
   useEffect(() => {
     const [, name] = (location.pathname || '').match(/\/([^/]+)$/) || []
     setCity(capitalize(name))
   }, [location.pathname])
 
+  useDidUpdateEffect(async () => {
+    if (city && difficulty) {
+      setLoading(true);
+      const route = await axios.get(`${API_URL}/getRoute?city=${city}&difficulty=${difficulty}`);
+      setRoute(route);
+      setLoading(false);
+
+      console.log('ROUTE', route);
+    }
+  }, [city, difficulty])
+
   const [map, setMap] = useState(null);
 
   return (
     <Map
       apiKey={API_KEY}
-      center={center}
+      center={centers[city]}
       zoom={zoom}
       onMapChange={setMap}
       renderLeftTopControl={map => (<>
@@ -151,11 +229,13 @@ const MapScreen = ({
               step={1}
             />
           </CardInner>
+          <ButtonWrapper>
+            <Button width={tripWidth} size={'large'} loading={loading} disabled={loading}>
+              Get a new trip 🚴
+            </Button>
+          </ButtonWrapper>
         </Card>
-        {getTripContent()}
-        <Button width={tripWidth} size={'large'}>
-          Get a new trip 🚴
-        </Button>
+        <TripContent trip={{}} />
       </>)}
     >
       <MapDirectionsRenderer points={points} options={{ suppressMarkers: true }} />
