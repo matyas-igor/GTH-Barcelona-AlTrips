@@ -10,8 +10,16 @@ Project submission for the `Global Travel Hackathon in Barcelona, by AlernativeT
 
 ## :books: Description
 
-Write a short abstract of the project. Don't forget to include:
+ALTrips generates bicycle routes in suburbs area to promote local and sustainable tourism; providing cheaper and less CO2 emission options to travel.
 
+Components not created at the hackathon: 
+- accommodation suggestions on the bicycle route
+- extended route filters (exceedance, surface type, distance from the city, key words, localisation)
+- bicycle services, shops, renting points
+
+
+
+Write a short abstract of the project. Don't forget to include:
 * Hackathon topic you used (Sustainability, Accessibility or Community);
 * The development tools used to build the project;
 * SDKs used in the project;
@@ -23,10 +31,10 @@ Write a short abstract of the project. Don't forget to include:
 ## :hugs: Maintainers
 
 List all the team members. For example:
-* [Igor Matias - matyas-igor](https://github.com/matyas-igor)
-* [Erlinis Quintana - erlinis](https://github.com/erlinis)
-* [Joao Miguel Santos - JoMiguelSantos](https://github.com/JoMiguelSantos)
-* [Kamil Brzozowski - nevrexb](https://github.com/nevrexb)
+* [Igor Matias - matyas-igor](https://github.com/matyas-igor) - Front-End Dev
+* [Erlinis Quintana - erlinis](https://github.com/erlinis) - Back-End Dev
+* [Joao Miguel Santos - JoMiguelSantos](https://github.com/JoMiguelSantos) - Data Analyst
+* [Kamil Brzozowski - nevrexb](https://github.com/nevrexb) - UX/UI Designer
 
 
 ## :tada: Why is this so awesome?
