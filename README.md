@@ -1,5 +1,5 @@
 # GTH-Barcelona-AlternativeTrips
-Project submission for the `Global Travel Hackathon in Barcelona, by AlernativeTrips team`.
+Project submission for the `Global Travel Hackathon in Barcelona, by AlternativeTrips team`.
 
 **Bycicle trip panner for sustainable and eco-friendly future**
 
